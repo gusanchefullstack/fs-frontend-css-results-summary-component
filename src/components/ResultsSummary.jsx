@@ -48,7 +48,7 @@ const ResultsSummary = () => {
             <div className="item-score"> <span>73</span> <span>/ 100</span></div>
           </div>
         </div>
-        <button className="h-14 w-full rounded-[128px] bg-dark-gray-blue text-white-card font-bold text-lg mt-[41px]">
+        <button className="h-14 w-full rounded-[128px] bg-dark-gray-blue text-white-card font-bold text-lg mt-[41px] hover:cursor-pointer hover:bg-gradient-to-b hover:from-light-slate-blue-background hover:to-light-royal-blue-background">
           Continue
         </button>
       </div>
