@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
 
 @theme {
   --color-light-red: hsl(0, 100%, 67%);
@@ -12,7 +12,7 @@
   --color-violet-blue-circle: hsla(256, 72%, 46%, 1);
   --color-persian-blue-circle: hsla(241, 72%, 46%, 0);
 
-  --color-white: hsl(0, 0%, 100%);
+  --color-white-card: hsl(0, 0%, 100%);
   --color-pale-blue: hsl(221, 100%, 96%);
   --color-light-lavender: hsl(241, 100%, 89%);
   --color-dark-gray-blue: hsl(224, 30%, 27%);
