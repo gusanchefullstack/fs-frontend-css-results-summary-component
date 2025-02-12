@@ -22,11 +22,18 @@
 
 @layer components {
   .summary-card {
-    @apply flex justify-between items-center;
+    @apply flex justify-between items-center rounded-xl p-4;
   }
   .summary-item {
-    @apply font-bold;
+    @apply font-medium text-lg;
   }
-  .item-score {
+  .summary-title-container {
+    @apply flex items-center justify-center gap-3
+  }
+  .item-score :nth-child(1) {
+    @apply text-lg font-bold;
+  }
+  .item-score :nth-child(2) {
+    @apply text-lg font-bold opacity-50 text-dark-gray-blue;
   }
 }
