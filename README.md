@@ -103,34 +103,36 @@ const ResultsSummary = () => {
   useEffect(() => {
     //load data from json file
     const getData = async () => {
-      const response = await fetch("/data.json");
-      const data = await response.json();
-      console.log(data);
-      //add color property to each item based on category using switch statement with opacity of 5  
-      data.forEach((item) => {
-        switch (item.category) {
-          case "Reaction":
-            item.color = "text-light-red";
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch("./data.json", options);
+        const data = await response.json();
+        console.log("Previous", data);
+        data.forEach((item) => {
+          //add class to each item based on category for styling based in color and background color
+          if (item.category === "Reaction") {
             item.class = "bg-light-red/5";
-            break;
-          case "Memory":
-            item.color = "text-orangey-yellow";
+            item.color = "text-light-red";
+          } else if (item.category === "Memory") {
             item.class = "bg-orangey-yellow/5";
-            break;
-          case "Verbal":
-            item.color = "text-green-teal";
+            item.color = "text-orangey-yellow";
+          } else if (item.category === "Verbal") {
             item.class = "bg-green-teal/5";
-            break;
-          case "Visual":
-            item.color = "text-cobalt-blue";
+            item.color = "text-green-teal";
+          } else if (item.category === "Visual") {
             item.class = "bg-cobalt-blue/5";
-            break;
-          default:
-            break;
-        }
-      });
-      console.log(data);
-      setItems(data);
+            item.color = "text-cobalt-blue";
+          }
+        });
+        setItems(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getData();
   }, []);
