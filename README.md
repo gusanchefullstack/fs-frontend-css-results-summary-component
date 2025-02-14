@@ -174,7 +174,7 @@ const ResultsSummary = () => {
               </div>
               <div className="flex flex-row gap-2">
                 <p className="font-bold text-dark-gray-blue">{item.score}</p>
-                <p className="font-medium text-grayish-blue">/ 100</p>
+                <p className="font-medium text-grayish-blue/50">/ 100</p>
               </div>
             </div>
           ))}

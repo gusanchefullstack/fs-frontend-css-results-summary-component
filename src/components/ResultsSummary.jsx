@@ -68,7 +68,7 @@ const ResultsSummary = () => {
           {items.map((item) => (
             <div
               key={item.category}
-              className={`flex flex-row justify-between items-center h-[56px] rounded-[8px] ${item.class}`}
+              className={`flex flex-row justify-between items-center h-[56px] rounded-[8px] ${item.class} px-4`}
             >
               <div className="flex flex-row gap-3">
                 <img src={item.icon.split("-")[1]} alt={item.category} />
@@ -76,7 +76,7 @@ const ResultsSummary = () => {
               </div>
               <div className="flex flex-row gap-2">
                 <p className="font-bold text-dark-gray-blue">{item.score}</p>
-                <p className="font-medium text-grayish-blue">/ 100</p>
+                <p className="font-bold text-dark-gray-blue/50">/ 100</p>
               </div>
             </div>
           ))}
