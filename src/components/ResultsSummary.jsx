@@ -6,7 +6,12 @@ const ResultsSummary = () => {
     //load data from json file
     const getData = async () => {
       try {
-        const response = await fetch("../../data.json");
+        const options = {
+          method: "GET",
+          headers: {  
+            "Content-Type": "application/json",
+          }}
+        const response = await fetch("../../data.json", options);
         const data = await response.json();
         //add color property to each item based on category using switch statement with opacity of 5
         data.forEach((item) => {
