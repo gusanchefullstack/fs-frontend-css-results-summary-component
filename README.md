@@ -14,9 +14,6 @@ This is a solution to the [Results summary component challenge on Frontend Mento
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -30,15 +27,9 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](./screenshots/DesktopDev.png)
+![](./screenshots/MobileDev.png)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
 
 ### Links
 
@@ -52,51 +43,158 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - Semantic HTML5 markup
 - CSS custom properties
 - Flexbox
-- CSS Grid
-- Mobile-first workflow
+- Desktop-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- [Tailwind CSS](https://tailwindcss.com/docs/installation/using-vite) - For styles
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
-
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+- Using @layer components and personalizing themes:
 ```css
-.proud-of-this-css {
-  color: papayawhip;
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-light-red: hsl(0, 100%, 67%);
+  --color-orangey-yellow: hsl(39, 100%, 56%);
+  --color-green-teal: hsl(166, 100%, 37%);
+  --color-cobalt-blue: hsl(234, 85%, 45%);
+
+  --color-light-slate-blue-background: hsl(252, 100%, 67%);
+  --color-light-royal-blue-background: hsl(241, 81%, 54%);
+  --color-violet-blue-circle: hsla(256, 72%, 46%, 1);
+  --color-persian-blue-circle: hsla(241, 72%, 46%, 0);
+
+  --color-white-card: hsl(0, 0%, 100%);
+  --color-pale-blue: hsl(221, 100%, 96%);
+  --color-light-lavender: hsl(241, 100%, 89%);
+  --color-dark-gray-blue: hsl(224, 30%, 27%);
+
+  --font-summary-card: "Hanken Grotesk", sans-serif;
+}
+
+@layer components {
+  .summary-card {
+    @apply flex justify-between items-center rounded-xl p-4;
+  }
+  .summary-item {
+    @apply font-medium text-lg max-sm:text-base;
+  }
+  .summary-title-container {
+    @apply flex items-center justify-center gap-3
+  }
+  .item-score :nth-child(1) {
+    @apply text-lg max-sm:text-base font-bold;
+  }
+  .item-score :nth-child(2) {
+    @apply text-lg max-sm:text-base font-bold opacity-50 text-dark-gray-blue;
+  }
 }
 ```
+
+- Using map to bring JSON Data:
+
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+import { useState, useEffect } from "react";
+
+const ResultsSummary = () => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    //load data from json file
+    const getData = async () => {
+      const response = await fetch("/data.json");
+      const data = await response.json();
+      console.log(data);
+      //add color property to each item based on category using switch statement with opacity of 5  
+      data.forEach((item) => {
+        switch (item.category) {
+          case "Reaction":
+            item.color = "text-light-red";
+            item.class = "bg-light-red/5";
+            break;
+          case "Memory":
+            item.color = "text-orangey-yellow";
+            item.class = "bg-orangey-yellow/5";
+            break;
+          case "Verbal":
+            item.color = "text-green-teal";
+            item.class = "bg-green-teal/5";
+            break;
+          case "Visual":
+            item.color = "text-cobalt-blue";
+            item.class = "bg-cobalt-blue/5";
+            break;
+          default:
+            break;
+        }
+      });
+      console.log(data);
+      setItems(data);
+    };
+    getData();
+  }, []);
+
+  return (
+    <div className="flex flex-row max-sm:flex-wrap max-sm:justify-center text-lg font-summary-card bg-white-card w-[736px] h-[512px] rounded-[32px] ">
+      <div className="w-[368px] max-sm:w-[375px] h-full max-sm:h-[356px] bg-linear-to-b from-light-slate-blue-background to-light-royal-blue-background text-center pt-[38px] max-sm:pt-6 rounded-[32px] max-sm:rounded-t-none">
+        <h1 className="font-bold text-2xl max-sm:text-lg text-light-lavender">
+          Your Result
+        </h1>
+        <div className="mx-auto flex flex-col justify-center items-center h-[200px] w-[200px] max-sm:h-[140px] max-sm:w-[140px] bg-linear-to-b from-violet-blue-circle to-persian-blue-circle rounded-full mt-[35px] max-sm:mt-6">
+          <div className="font-extrabold text-white-card text-7xl max-sm:text-[56px]">
+            76
+          </div>
+          <div className="text-lg max-sm:text-base font-semibold text-light-lavender">
+            of 100
+          </div>
+        </div>
+        <p className="text-white-card font-bold text-[32px] max-sm:text-2xl mt-7 max-sm:mt-5">
+          Great
+        </p>
+        <p className="font-medium text-lg max-sm:text-base text-light-lavender px-[54px]">
+          You scored higher than 65% of the people who have taken these tests.
+        </p>
+      </div>
+      <div className="w-[368px] max-sm:w-[375px] h-full max-sm:h-[356px] p-[38px]">
+        <h2 className="text-dark-gray-blue font-bold text-2xl max-sm:text-lg">
+          Summary
+        </h2>
+        <div className="flex flex-col gap-4 mt-7">
+          {items.map((item) => (
+            <div
+              key={item.category}
+              className={`flex flex-row justify-between items-center h-[56px] rounded-[8px] ${item.class}`}
+            >
+              <div className="flex flex-row gap-3">
+                <img src={item.icon.split("-")[1]} alt={item.category} />
+                <p className={`font-medium ${item.color}`}>{item.category}</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <p className="font-bold text-dark-gray-blue">{item.score}</p>
+                <p className="font-medium text-grayish-blue">/ 100</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button className="h-14 w-full rounded-[128px] bg-dark-gray-blue text-white-card font-bold text-lg max-sm:text-lg mt-[41px] max-sm:mt-6 hover:cursor-pointer hover:bg-gradient-to-b hover:from-light-slate-blue-background hover:to-light-royal-blue-background">
+          Continue
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ResultsSummary;
 ```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+I will continue using tailwind and react as practice in my learning process even I could just use plain CSS and HTML to get familiar with these technologies.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
-
+- [Tailwind CSS](https://tailwindcss.com/docs/installation/using-vite) - For styles
 ## Author
 
 - Website - [Gustavo Sanchez](https://gusanchefullstack.dev/)
