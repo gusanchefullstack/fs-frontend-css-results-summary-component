@@ -8,24 +8,35 @@ const ResultsSummary = () => {
       try {
         const options = {
           method: "GET",
-          headers: {  
+          headers: {
             "Content-Type": "application/json",
-          }}
+          },
+        };
         const response = await fetch("./data.json", options);
         const data = await response.json();
         console.log("Previous", data);
-        data.forEach((item) => { // add class and color to each item
-          item.class = `bg-${item.category.toLowerCase()}-background`;
-          item.color = `text-${item.category.toLowerCase()}-color`;
+        data.forEach((item) => {
+          //add class to each item based on category for styling based in color and background color
+          if (item.category === "Reaction") {
+            item.class = "bg-light-red/5";
+            item.color = "text-light-red";
+          } else if (item.category === "Memory") {
+            item.class = "bg-orangey-yellow/5";
+            item.color = "text-orangey-yellow";
+          } else if (item.category === "Verbal") {
+            item.class = "bg-green-teal/5";
+            item.color = "text-green-teal";
+          } else if (item.category === "Visual") {
+            item.class = "bg-cobalt-blue/5";
+            item.color = "text-cobalt-blue";
+          }
         });
         setItems(data);
-        
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-    console.log("After", items);
   }, []);
 
   return (
