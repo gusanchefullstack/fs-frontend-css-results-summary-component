@@ -5,7 +5,7 @@ const ResultsSummary = () => {
   useEffect(() => {
     //load data from json file
     const getData = async () => {
-      const response = await fetch("/data.json");
+      const response = await fetch("../../data.json");
       const data = await response.json();
       console.log(data);
       //add color property to each item based on category using switch statement with opacity of 5  
